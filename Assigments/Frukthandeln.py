@@ -10,37 +10,43 @@ korg = [
     [],[],[]
 ]
 
+fukta = ""
+
 #a variable that takes number of customers as input to run a programm equal times
 kunder = int(input("Hur många kunder: "))
 
-#a main loop that runs ones for each customer
-for a in range (0, kunder):
-    #start welcome-message
+def handel():
     print("Välkommen till vår butik! Här är en lista av våra frukter: ")
-
-    #a loop that prints all the available fruits
     for i in range(0, len(fruktLista[0])):
         if fruktLista[2][i] > 0:
             print("__________________________________________________")
             print(fruktLista[0][i] + ": " + str(round(fruktLista[1][i])) + " kr/kg. " + "Vi har", fruktLista[2][i], "kg kvar.")
 
-    for i in range(0, 10):
-        korg[0].append(input("\nVälj en fruk som du vill köpa (välj bara EN): ").upper())
-        korg[1].append(float(input("Hur mycket vill du ta? Ange värde i kg: ")))
+    while True:
+        frukta = input("\nVälj en fruk som du vill köpa (välj bara EN): ").upper()
+        if not frukta in fruktLista[0]:
+            print("Vi har ingen", frukta, "försök igen")
+        else:
+            korg[0].append(input("\nVälj en fruk som du vill köpa (välj bara EN): ").upper())
+            korg[1].append(float(input("Hur mycket vill du ta? Ange värde i kg: ")))
+        
+            for j in range (0, len(fruktLista[0])):
+                if korg[0][i] == fruktLista[0][j]:
+                    korg[2].append(korg[1][i]*fruktLista[1][j])
+                    fruktLista[2][j] = fruktLista[2][j] - korg[1][i]
+                    print(str(korg[0][i])+ ": " + str(korg[1][i]) + "kg " + str(korg[2][i])+ "kr")
+            mer = input("Vill du ha något mer? Svara ja eller nej: ")
+            if mer.upper() != "JA":
+                break
 
-        for j in range (0, len(fruktLista[0])):
-            if korg[0][i] == fruktLista[0][j]:
-                korg[2].append(korg[1][i]*fruktLista[1][j])
-                fruktLista[2][j] = fruktLista[2][j] - korg[1][i]
-                print(str(korg[0][i])+ ": " + str(korg[1][i]) + "kg " + str(korg[2][i])+ "kr")
-
-        mer = input("Vill du ha något mer? Svara ja eller nej: ")
-        if mer.upper() != "JA":
-            break
-
-    print("Kvitto:")
+    print("\nKvitto:")
     sum = 0
     for i in range(len(korg[2])):
         sum += korg[2][i]
         print(str(korg[0][i]) + ", "+ str(korg[1][i]) + "kg: "+ str(korg[2][i])+"kr")
     print("Totalt: " + str(round(sum))+"kr\nNästa kund! \n")
+
+#a main loop that runs ones for each customer
+for a in range (0, kunder):
+    handel()
+    
