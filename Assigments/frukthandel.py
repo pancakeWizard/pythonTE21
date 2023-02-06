@@ -1,11 +1,12 @@
 from operator import itemgetter
 import os
 
-
 def clear():
     os.system('cls' if os.name=='nt' else 'clear')
     total = 0
 
+#variabel för som gör det möjlig för kunder att köpa so mycket frukter så mycket gånger som de vill
+i = 0
 
 #a function that clears lists with information about client
 def newClient():
@@ -13,7 +14,7 @@ def newClient():
     korg[1] = []
     korg[2] = []
     total = 0
-
+    i = 0
 
 #a list with all the information about fruits, how much is available and price/kg.
 fruktLista = [
@@ -22,20 +23,16 @@ fruktLista = [
     [12.0, 13.0, 73.0, 83.0, 55.0, 69.0, 96.0, 48.0, 43.0, 37.0]
 ]
 
-
 #a shopping-list to write information about what, how much and price for the customer
 korg = [
     [],[],[]
 ]
 
-
 #a variable that takes the number of customers as input to run the main part of the program equal number times.
 kunder = int(input("Hur många kunder: "))
 
-
 #variabel to calculate total price
 total = 0
-
 
 #a function that prints the list of products. I use \t which works as a tab-button so the list seems better.
 def varor():
@@ -49,12 +46,8 @@ for kund in range(kunder):
     clear()
     print("Välkommen till vår butik! Här är en lista av våra frukter: ")
     varor()
-    #This loop needs to output product and price correctly. There is just 10 fruits in the store which means buying all of them takes 10 steps
-
-
-    #upd. It will limit requests that clients can send. As a possible (but I think not the best) improvement i set 1 000 000 000 instead for 10, not sure that it's a good idea
-    #but on the other hand I'm not sure the client will try to buy something as many times.
-    for i in range(1000000000):
+    #This loop needs to output product and price correctly. It's a while loop because we want to give a possibility to buy as many times a client want.
+    while i >= 0:
         #validation of fruit input: is there this fruit in the store? If not - try again
         while True:
              #variabel to input fruit from user and then validate it
@@ -84,11 +77,12 @@ for kund in range(kunder):
                 korg[1].append(float(fruktLista[1][el]*korg[2][i]))
                 #subtraction bought kg of the product
                 fruktLista[2][el] -= korg[2][i]
-                #writing what, how much and for which price the customer bought
+                #prints what, how much and for which price the customer bought
                 print(korg[0][i], korg[2][i], "kg   \t", korg[1][i],"kr")
         #asking if the customer wants to buy something more. If not - we go out of loop, print check and start with the next customer.
         if input("Vill du ta något mer? (Ja eller Nej?)").upper() != "JA":
             break
+        i += 1
     #simple output of check
     print("\nKvitto:")
     for kel in range(len(korg[0])):
