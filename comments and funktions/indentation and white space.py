@@ -8,6 +8,6 @@ elif annualSales >= 30000:
 elif annualSales >= 10000:
     print("Bronze customer")
 print("Thank you for your business")
-print(f"Your sales representative is {firstName}," \ 
-      "you are in the {region} region, and you had" \ 
-      "{annualSales} in last year. Thanks!")
+print(f"Your sales representative is {firstName}" \
+      f"you are in the {region} region, and you had "\
+        f"{annualSales} in last year. Thanks!")
