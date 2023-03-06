@@ -1,15 +1,16 @@
+def cleanUserData(array,newArray):
+    for i in range (len(array)):
+        newArray[i] = newArray[i].replace(' ','')
+        newArray[i] = newArray[i].replace('\n','')
+        newArray[i] = newArray[i].lower()
+
 def auth():
     with open ("Assigments/Dating app/tables/userLogin.txt", "r") as users:
         userList = users.readlines()
     with open("Assigments/Dating app/tables/userPass.txt", "r") as key:
         keyList = key.readlines()
-    for i in range (len(userList)):
-        keyList[i] = keyList[i].replace(' ','')
-        keyList[i] = keyList[i].replace('\n','')
-        userList[i] = userList[i].replace(' ','')
-        userList[i] = userList[i].replace('\n','')
-        keyList[i] = keyList[i].lower()
-        userList[i] = userList[i].lower()
+    cleanUserData(userList,keyList)
+    cleanUserData(userList,userList)
     print(userList)
     print(keyList)
     currentUser = input("Enter your login: ").lower()
@@ -26,8 +27,6 @@ def auth():
                             break
                     else:
                         print("You enter wrong password 3 times. Reload app to sign up or try again.")
-            else:
-                print(" :( ")
     else:
         print(f"There is no user {currentUser}. Reload app to sign up or try again.")
 
@@ -36,8 +35,15 @@ def signUp():
         userList = users.readlines()
         print("Welcom to our dating app! We need some information to create your account.")
         with open ("Assigments/Dating app/tables/userLogin.txt", "a") as users:
-            newUser = input("Enter your name: ")
-            users.write(f"\n{newUser}")
+            cleanUserData(userList,userList)
+            print(userList)
+            while True:
+                newUser = input("Create your login: ").lower()
+                if newUser in userList:
+                    print(f"Account {newUser} already exists. Try again.")
+                else:
+                    users.write(f"\n{newUser}")
+                    break
     while True:
         newPassword = input("Create your password: ")
         newPasswordConf = input("Confirm your password: ")
@@ -45,7 +51,7 @@ def signUp():
             print("You enter two diffrent passwords. Try again! ")
         else:
             with open("Assigments/Dating app/tables/userPass.txt", "a") as key:
-                key.write(f" {newPasswordConf}")
+                key.write(f"\n{newPasswordConf}")
             break
     
-auth()
+signUp()
