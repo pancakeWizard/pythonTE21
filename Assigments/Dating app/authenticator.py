@@ -31,6 +31,7 @@ def auth():
         print(f"There is no user {currentUser}. Reload app to sign up or try again.")
 
 def signUp():
+    interestsList = []
     with open ("Assigments/Dating app/tables/userLogin.txt", "r") as users:
         userList = users.readlines()
         print("Welcom to our dating app! We need some information to create your account.")
@@ -54,4 +55,22 @@ def signUp():
                 key.write(f"\n{newPasswordConf}")
             break
     
+    with open ("Assigments/Dating app/tables/persons.txt","a") as persons:
+        newName = input("Enter your first and second name: ")
+        persons.write(f"\n{newName}")
+
+    with open ("Assigments/Dating app/tables/sex.txt","a") as sex:
+        newSex = input("Enter your sex: ")
+        sex.write(f"\n{newSex}")
+
+    with open ("Assigments/Dating app/tables/preferences.txt","a") as preferences:
+        newPref = input("Enter your gender preferences (male/female/other)")
+        preferences.write(f"\n{newPref}")
+
+    with open ("Assigments/Dating app/tables/interests.txt", "a") as interests:
+        while True:
+            if input("Write \"add\n to add an intress or \"done\" to confirm your interests: ").lower() == "add":
+                newIteres = input("""Choose an interes from the list below:
+1. """)
+
 signUp()
