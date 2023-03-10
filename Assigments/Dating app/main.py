@@ -13,22 +13,31 @@ def auth():
     cleanUserData(userList,userList)
     print(userList)
     print(keyList)
-    currentUser = input("Enter your login: ").lower()
-    if currentUser in userList:
-        for i in range(0,len(userList)):
-            if currentUser == userList[i]:
-                print("Hilow hilow")
-                for t in range (0, 4):
-                    s = 3-t
-                    if s!= 0:
-                        keyWord = input(f"Enter your password. You have only {s} try. ").lower()
-                        if keyWord == keyList[i]:
-                            print(f"Welcome, {currentUser}")
-                            break
-                    else:
-                        print("You enter wrong password 3 times. Reload app to sign up or try again.")
-    else:
-        print(f"There is no user {currentUser}. Reload app to sign up or try again.")
+    while True:
+        currentUser = input("Enter your login: ").lower()
+        if currentUser in userList:
+            for i in range(0,len(userList)):
+                if currentUser == userList[i]:
+                    print("Hilow hilow")
+                    for t in range (0, 4):
+                        s = 3-t
+                        if s!= 0:
+                            keyWord = input(f"Enter your password. You have only {s} try. ").lower()
+                            if keyWord == keyList[i]:
+                                print(f"Welcome, {currentUser}")
+                                break
+                        else:
+                            print("You enter wrong password 3 times. Reload app to sign up or try again.")
+            break
+        else:
+            if input(f"""There is no user {currentUser}. 
+1. Try again
+2. Close app
+""") == "2":
+                break
+            else:
+                continue 
+    return(True)
 
 def signUp():
     interestsList = ["games", "travel", "music", "dance", "films", "food", "cars", "animals", "architecture", "IT", "sport", "books"]
@@ -70,7 +79,7 @@ def signUp():
     with open ("Assigments/Dating app/tables/interests.txt", "a") as interests:
         interests.write("\n")
         while True:
-            if input("Write \"add\n to add an intress or \"done\" to confirm your interests: ").lower() == "add":
+            if input("Write \"add\" to add an intress or \"done\" to confirm your interests: ").lower() == "add":
                 for i in range(0,len(interestsList)):
                     print(f"{i}. {interestsList[i]}")
                 newInteres = input("Choose an interes from the list above. T.ex. 1 or 5: ")
@@ -92,8 +101,9 @@ start = input("""Welcome to our dating app!
 """)
 
 if start == "1":
-    auth()
+    login = auth()
 elif start == "2":
     signUp()
-    auth()
+    login = auth()
 else: ("restart the app, idiot!")
+
