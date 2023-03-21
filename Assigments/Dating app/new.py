@@ -4,17 +4,34 @@ def cleanUserData(array,newArray):
         newArray[i] = newArray[i].replace('\n','')
         newArray[i] = newArray[i].lower()
 
+interestsList = ["games", "travel", "music", "dance", "films", "food", "cars", "animals", "architecture", "IT", "sport", "books"]
+
 userFile = open("Assigments/Dating app/tables/userLogin.txt", "r+")
 passFile = open("Assigments/Dating app/tables/userPass.txt", "r+")
 personsFile = open ("Assigments/Dating app/tables/persons.txt","r+")
 sexFile = open("Assigments/Dating app/tables/sex.txt","r+")
 prefFile = open ("Assigments/Dating app/tables/preferences.txt","r+")
+interFile = open("Assigments/Dating app/tables/interests.txt", "r+")
+ageFile = open ("Assigments/Dating app/tables/age.txt", "r+")
+
+
+        # interests.write("\n")
+        # while True:
+        #     if input("Write \"add\n to add an intress or \"done\" to confirm your interests: ").lower() == "add":
+        #         for i in range(0,len(interestsList)):
+        #             print(f"{i}. {interestsList[i]}")
+        #         newInteres = input("Choose an interes from the list above. T.ex. 1 or 5: ")
+        #         interests.write(f"{newInteres} ")
+        #     else:
+        #         break
 
 sexes = sexFile.readlines()
 users = userFile.readlines()
 passwords = passFile.readlines()
 persons = personsFile.readlines()
 preferences = prefFile.readlines()
+interests = interFile.realines()
+ages = ageFile.readlines()
 
 cleanUserData(users,users)
 cleanUserData(passwords,passwords)
@@ -117,7 +134,43 @@ def signUp(login, password):
                 return
         else:
             break
-        
+
+    while True:
+        newAge = int(input("Enter your age: "))
+        if not newAge.isalnum():
+            nextAge = input("You may not skip this question.\n1. Try again\n2. Exit\n")
+            if nextAge != "2":
+                continue
+            else:
+                return
+        else:
+            break
+#
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#                        FIX IT!
+#
+    interests.wirte("\n")
+    while True:
+        if input("Write \"add\" to add an intress or \"done\" to confirm your interests: ").lower() == "add":
+                for i in range(0,len(interestsList)):
+                    print(f"{i}. {interestsList[i]}")
+                newInteres = input("Choose an interes from the list above. T.ex. 1 or 5: ")
+                if not newInteres.isalum():
+                    nextInter = input("You may not skip this question.\n1. Try again\n2. Exit\n")
+                    if nextInter != 2:
+                        continue
+                    else:
+                        return
+                else:
+                    interests.write(int(newInteres))
+                    interests.write(" ")
+        else:
+            break
+#
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#                        FIX IT!
+#
+
 
         
             
@@ -130,7 +183,8 @@ def signUp(login, password):
         # personsFile.write(f"\n{newName}")
         # sexFile.write(f"\n{newSex}")
         # preferences.write(f"\n{newPref}")
-        pass
+        # age.write(f"\n{newAge}")
+            pass
             
     
     
@@ -140,3 +194,6 @@ userFile.close()
 passFile.close()
 personsFile.close()
 sexFile.close()
+prefFile.close()
+interFile.close()
+ageFile.close()
