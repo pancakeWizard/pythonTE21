@@ -14,31 +14,22 @@ prefFile = open ("Assigments/Dating app/tables/preferences.txt","r+")
 interFile = open("Assigments/Dating app/tables/interests.txt", "r+")
 ageFile = open ("Assigments/Dating app/tables/age.txt", "r+")
 
-
-        # interests.write("\n")
-        # while True:
-        #     if input("Write \"add\n to add an intress or \"done\" to confirm your interests: ").lower() == "add":
-        #         for i in range(0,len(interestsList)):
-        #             print(f"{i}. {interestsList[i]}")
-        #         newInteres = input("Choose an interes from the list above. T.ex. 1 or 5: ")
-        #         interests.write(f"{newInteres} ")
-        #     else:
-        #         break
-
-sexes = sexFile.readlines()
 users = userFile.readlines()
 passwords = passFile.readlines()
+sexes = sexFile.readlines()
 persons = personsFile.readlines()
 preferences = prefFile.readlines()
-interests = interFile.realines()
+interests = interFile.readlines()
 ages = ageFile.readlines()
 
 cleanUserData(users,users)
 cleanUserData(passwords,passwords)
 cleanUserData(sexes, sexes)
+cleanUserData(persons, persons)
 cleanUserData(preferences,preferences)
+cleanUserData(ages, ages)
 
-def auth(login, password):
+def auth(login =users, password =passwords):
     print(login)
     print(password)
     while True:
@@ -54,19 +45,20 @@ def auth(login, password):
                             break
                         else:
                             wrongPass = input("Wrong password. \n1. Try again \n2. Exit \n")
-                            if wrongPass == "1":
+                            if wrongPass != "2":
                                 continue
                             else: 
-                                break
+                                return
         else:
             inp = input(f"There is no user {currentUser}. \n1. Try again \n2. Exit \n")
-            if inp == "1":
+            if inp != "2":
                 continue
             else:
-                break
+                return
         break
+    return(currentUser)
 
-def signUp(login, password):
+def signUp(login =users, password =passwords):
     print(login)
     while True:
         newUser = input("Create your login: ").lower()
@@ -95,7 +87,7 @@ def signUp(login, password):
             break
     
     while True:
-        newName = input("Enter your first and second name: ")
+        newName = input("Enter your first name: ")
 # newName.isalnum() returns true if the string is spaces. I don't want to allow users to enter just spaces or enter to skip questions.
 # I took this function from stackoverflow. I could use "or newName == ' ' or newName == '  '", but it's not too logical to try
 #guess how many times the user will type space.
@@ -108,7 +100,8 @@ def signUp(login, password):
                 return
         else:
             break
-    
+
+ #this part will be improved with help of try except in future version.   
     while True:
         newSex = input("What is your gender?\n1. Male\n2. Female\n4. Other\n")
         if not newSex.isalnum():
@@ -117,16 +110,17 @@ def signUp(login, password):
                 continue
             else:
                 return
-        elif newSex != "1" or "2":
+        if newSex != "2" and newSex != "1":
             print("Your gender is changed to 4 (other)")
-            newSex = "4"
+            newSex = 4
             break
         else:
             break
-    
+        
+ #this part will be improved with help of try except in future version.   
     while True:
         newPref = input("Choose which gender would you like to date?\n1. Male\n2. Female\n3. Both\n4. Other\n")
-        if newPref != "1" or "2" or "3" or "4" or not newPref.isalnum():
+        if newPref != "1" and newPref != "2" and newPref != "3" and newPref != "4" and not newPref.isalnum():
             nextPref = input("You may not skip this question.\n1. Try again\n2. Exit\n")
             if nextPref != "2":
                 continue
@@ -135,8 +129,9 @@ def signUp(login, password):
         else:
             break
 
+#this part will be improved with help of try except in future version.
     while True:
-        newAge = int(input("Enter your age: "))
+        newAge = input("Enter your age: ")
         if not newAge.isalnum():
             nextAge = input("You may not skip this question.\n1. Try again\n2. Exit\n")
             if nextAge != "2":
@@ -145,50 +140,73 @@ def signUp(login, password):
                 return
         else:
             break
-#
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#                        FIX IT!
-#
-    interests.wirte("\n")
+
+#This part will be improved with help of try except in future versions. There is a problem now: if user will enter an empty intress
+##then the database system will not work anymore. Due to the fact that there is no way to control it and overwrite file without a big piece of code with
+#a lot of comparisons that I don't think are as necessary in this version I will improve it in an easier way during develompent of the second versin 
+#by using try-catch
+    interFile.write("\n")
     while True:
         if input("Write \"add\" to add an intress or \"done\" to confirm your interests: ").lower() == "add":
-                for i in range(0,len(interestsList)):
-                    print(f"{i}. {interestsList[i]}")
-                newInteres = input("Choose an interes from the list above. T.ex. 1 or 5: ")
-                if not newInteres.isalum():
-                    nextInter = input("You may not skip this question.\n1. Try again\n2. Exit\n")
-                    if nextInter != 2:
-                        continue
-                    else:
-                        return
-                else:
-                    interests.write(int(newInteres))
-                    interests.write(" ")
+            for i in range(0,len(interestsList)):
+                print(f"{i}. {interestsList[i]}")
+            newInteres = input("Choose an interes from the list above. T.ex. 1 or 5: ")
+            if not newInteres.isalnum():
+                nextInter = input("You may not skip this question.\n1. Try again\n2. Exit\n")
+                if nextInter != "2":
+                    continue
+                else:                       
+                    return   
+            else:
+                interFile.write(f"{newInteres} ")
         else:
             break
-#
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#                        FIX IT!
-#
-
-
-        
-            
-        
 #this section will write all the data about the user to "database files" if the user doesn't break signing up.
 #But if the user breaks the process, no data will be written.
-    if True:
-        # userFile.write(f"\n{newUser}")
-        # passFile.write(f"\n{newPasswordConf}")
-        # personsFile.write(f"\n{newName}")
-        # sexFile.write(f"\n{newSex}")
-        # preferences.write(f"\n{newPref}")
-        # age.write(f"\n{newAge}")
-            pass
-            
-    
-    
-signUp(users, passwords)
+    userFile.write(f"\n{newUser}")
+    passFile.write(f"\n{newPasswordConf}")
+    personsFile.write(f"\n{newName}")
+    sexFile.write(f"\n{newSex}")
+    prefFile.write(f"\n{newPref}")
+    ageFile.write(f"\n{newAge}")
+    return(True)
+
+def searchMachine(user):
+    for name in users:
+        if name == user:
+            print(name)
+
+def chat():
+    pass
+
+def mainMenu():
+    while True:
+        mainState = input("Welcome to our dating app! \n1. Log in\n2. Sign up\n3. Find best matches\n4. Open chat\n5. Exit\n")
+        if mainState == "1":
+            loginAs = auth(users,passwords)
+            continue
+        elif mainState == "2":
+            isSignedUp = signUp()
+            if isSignedUp:
+                print("You are successfully signed up! Start using our app by Log in.")
+            continue
+        elif mainState == "3" and not loginAs is None:
+            searchMachine(loginAs)
+            continue
+        elif mainState == "3" and loginAs is None:
+            print("You need to create an account or log in before you can use our app!")
+            continue
+        elif mainState == "4" and not loginAs is None:
+            chat()
+            continue
+        elif mainState == "4" and not loginAs is None:
+            print("You need to create an account or log in before you can open chat!")
+            continue
+        elif mainState == "5":
+            break
+        return
+
+mainMenu()
 
 userFile.close()
 passFile.close()
