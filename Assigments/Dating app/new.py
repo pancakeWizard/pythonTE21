@@ -62,7 +62,7 @@ def signUp(login =users, password =passwords):
     print(login)
     while True:
         newUser = input("Create your login: ").lower()
-        if newUser in login or not newUser.isalnum():
+        if newUser in login or not newUser.isalnum() or newUser == "reserved":
             nextUser = input(f"Account {newUser} already exist or you are trying to create empty username.\n1. Try again.\n2. Log in\n3. Exit\n")
             if nextUser == "3":
                 return
@@ -172,14 +172,20 @@ def signUp(login =users, password =passwords):
     return(True)
 
 def searchMachine(user):
-    for name in users:
-        if name == user:
-            print(name)
+    if user == "reserved":
+        print("You need to log in before you can start us the app.")
+        return
+    else:
+        for login in users:
+            if user == login:
+
+                pass
 
 def chat():
     pass
 
 def mainMenu():
+    loginAs = "reserved"
     while True:
         mainState = input("Welcome to our dating app! \n1. Log in\n2. Sign up\n3. Find best matches\n4. Open chat\n5. Exit\n")
         if mainState == "1":
@@ -190,17 +196,11 @@ def mainMenu():
             if isSignedUp:
                 print("You are successfully signed up! Start using our app by Log in.")
             continue
-        elif mainState == "3" and not loginAs is None:
+        elif mainState == "3":
             searchMachine(loginAs)
             continue
-        elif mainState == "3" and loginAs is None:
-            print("You need to create an account or log in before you can use our app!")
-            continue
-        elif mainState == "4" and not loginAs is None:
-            chat()
-            continue
-        elif mainState == "4" and not loginAs is None:
-            print("You need to create an account or log in before you can open chat!")
+        elif mainState == "4":
+            chat(loginAs)
             continue
         elif mainState == "5":
             break
