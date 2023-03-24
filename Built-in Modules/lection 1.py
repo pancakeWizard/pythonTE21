@@ -9,19 +9,19 @@
 # print(upperBound)
 # print(lowerBound)
 
-# import os
-# import datetime
-# def clear():
-#     os.system('cls' if os.name=='nt' else 'clear')
+import os
+import datetime
+def clear():
+    os.system('cls' if os.name=='nt' else 'clear')
 
-# while True:
-#     todayWithTime = datetime.datetime.today()
-#     todayWithoutTime = datetime.date.today()
-#     print(todayWithTime)
-#     print(todayWithoutTime)
-#     print("The current date is", datetime.datetime.strftime(todayWithoutTime, "%Y/%m/%d"))
-#     print("The current time is", datetime.datetime.strftime(todayWithTime, "%H:%M:%S"))
-#     clear()
+while True:
+    todayWithTime = datetime.datetime.today()
+    todayWithoutTime = datetime.date.today()
+    print(todayWithTime)
+    print(todayWithoutTime)
+    print("The current date is", datetime.datetime.strftime(todayWithoutTime, "%Y/%m/%d"))
+    print("The current time is", datetime.datetime.strftime(todayWithTime, "%H:%M:%S"))
+    clear()
 
 # import io
 # with open("log.txt","w") as writeFile:
@@ -29,8 +29,8 @@
 #     writeFile.write(toLog)
 
 
-import os
+# import os
 
-dirName = input("Enter the mane of the folder you want to create. ")
-os.mkdir(dirName)
-print("Directory created.")
+# dirName = input("Enter the mane of the folder you want to create. ")
+# os.mkdir(dirName)
+# print("Directory created.")
