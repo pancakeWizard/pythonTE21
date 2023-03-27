@@ -1,8 +1,8 @@
-def cleanUserData(array,newArray):
+def cleanUserData(array):
     for i in range (len(array)):
-        newArray[i] = newArray[i].replace(' ','')
-        newArray[i] = newArray[i].replace('\n','')
-        newArray[i] = newArray[i].lower()
+        array[i] = array[i].replace(' ','')
+        array[i] = array[i].replace('\n','')
+        array[i] = array[i].lower()
 
 interestsList = ["games", "travel", "music", "dance", "films", "food", "cars", "animals", "architecture", "IT", "sport", "books"]
 
@@ -13,6 +13,8 @@ sexFile = open("Assigments/Dating app/tables/sex.txt","r+")
 prefFile = open ("Assigments/Dating app/tables/preferences.txt","r+")
 interFile = open("Assigments/Dating app/tables/interests.txt", "r+")
 ageFile = open ("Assigments/Dating app/tables/age.txt", "r+")
+ageMaxFile = open ("Assigments/Dating app/tables/maxAge.txt", "r+")
+ageMinFile = open ("Assigments/Dating app/tables/minAge.txt", "r+")
 
 users = userFile.readlines()
 passwords = passFile.readlines()
@@ -21,13 +23,17 @@ persons = personsFile.readlines()
 preferences = prefFile.readlines()
 interests = interFile.readlines()
 ages = ageFile.readlines()
+ageMax = ageMaxFile.readlines()
+ageMin = ageMinFile.readlines()
 
-cleanUserData(users,users)
-cleanUserData(passwords,passwords)
-cleanUserData(sexes, sexes)
-cleanUserData(persons, persons)
-cleanUserData(preferences,preferences)
-cleanUserData(ages, ages)
+cleanUserData(users)
+cleanUserData(passwords)
+cleanUserData(sexes)
+cleanUserData(persons)
+cleanUserData(preferences)
+cleanUserData(ages)
+cleanUserData(ageMax)
+cleanUserData(ageMin)
 
 def auth(login =users, password =passwords):
     print(login)
@@ -140,6 +146,28 @@ def signUp(login =users, password =passwords):
                 return
         else:
             break
+    
+    while True:
+        newMaxAge = input("What is the max age for a person you want to date? ")
+        if not newMaxAge.isalnum():
+            nextAge = input("You may not skip this question.\n1. Try again\n2. Exit\n")
+            if nextAge != "2":
+                continue
+            else:
+                return
+        else:
+            break
+
+    while True:
+        newMinAge = input("What is the min age for a person you want to date? ")
+        if not newMinAge.isalnum():
+            nextAge = input("You may not skip this question.\n1. Try again\n2. Exit\n")
+            if nextAge != "2":
+                continue
+            else:
+                return
+        else:
+            break
 
 #This part will be improved with help of try except in future versions. There is a problem now: if user will enter an empty intress
 ##then the database system will not work anymore. Due to the fact that there is no way to control it and overwrite file without a big piece of code with
@@ -161,6 +189,8 @@ def signUp(login =users, password =passwords):
                 interFile.write(f"{newInteres} ")
         else:
             break
+
+    
 #this section will write all the data about the user to "database files" if the user doesn't break signing up.
 #But if the user breaks the process, no data will be written.
     userFile.write(f"\n{newUser}")
@@ -169,6 +199,8 @@ def signUp(login =users, password =passwords):
     sexFile.write(f"\n{newSex}")
     prefFile.write(f"\n{newPref}")
     ageFile.write(f"\n{newAge}")
+    ageMaxFile.write(f"\n{newMaxAge}")
+    ageMinFile.write(f"\n{newMinAge}")
     return(True)
 
 def searchMachine(user):
@@ -176,10 +208,25 @@ def searchMachine(user):
         print("You need to log in before you can start us the app.")
         return
     else:
-        for login in users:
-            if user == login:
-
-                pass
+        for u in range(0, len(users)):
+            if user == users[u]:
+                sexMatches = []
+                ageMatches = []
+                fullMatch = []
+                for p in range(0, len(users)):
+                    if preferences[p] == sexes[u] and preferences[u] == sexes[p]:
+                        sexMatches.append(persons[p])
+                    if (ages[u] < ageMax[p] and ages[u] > ageMin[p]) and (ages[p] < ageMax[u] and ages[p] > ageMin[u]):
+                        ageMatches.append(persons[p])
+                
+                for sm in range(0, len(sexMatches)):
+                    for am in range(0, len(ageMatches)):
+                        if sexMatches[sm] in ageMatches[am]:
+                            fullMatch.append(sexMatches[sm])
+                if fullMatch != []:
+                    print(fullMatch)
+                else:
+                    print("meow")
 
 def chat():
     pass
@@ -215,3 +262,5 @@ sexFile.close()
 prefFile.close()
 interFile.close()
 ageFile.close()
+ageMaxFile.close()
+ageMinFile.close()
