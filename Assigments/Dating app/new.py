@@ -5,7 +5,6 @@ def cleanUserData(array):
         array[i] = array[i].lower()
 
 interestsList = ["games", "travel", "music", "dance", "films", "food", "cars", "animals", "architecture", "IT", "sport", "books"]
-
 userFile = open("Assigments/Dating app/tables/userLogin.txt", "r+")
 passFile = open("Assigments/Dating app/tables/userPass.txt", "r+")
 personsFile = open ("Assigments/Dating app/tables/persons.txt","r+")
@@ -34,6 +33,7 @@ cleanUserData(preferences)
 cleanUserData(ages)
 cleanUserData(ageMax)
 cleanUserData(ageMin)
+
 
 def auth(login =users, password =passwords):
     print(login)
@@ -208,25 +208,27 @@ def searchMachine(user):
         print("You need to log in before you can start us the app.")
         return
     else:
+        currentName = users.index(user)
         for u in range(0, len(users)):
             if user == users[u]:
                 sexMatches = []
                 ageMatches = []
                 fullMatch = []
                 for p in range(0, len(users)):
-                    if preferences[p] == sexes[u] and preferences[u] == sexes[p]:
-                        sexMatches.append(persons[p])
+                    if (preferences[p] == sexes[u] and preferences[u] == sexes[p]) or (preferences[p] == "3" and sexes[u] != "4") or (preferences[u] == "3" and sexes[p] != "4"):
+                        if persons[currentName] != persons[p]:
+                            sexMatches.append(persons[p])
                     if (ages[u] < ageMax[p] and ages[u] > ageMin[p]) and (ages[p] < ageMax[u] and ages[p] > ageMin[u]):
                         ageMatches.append(persons[p])
                 
                 for sm in range(0, len(sexMatches)):
                     for am in range(0, len(ageMatches)):
-                        if sexMatches[sm] in ageMatches[am]:
+                        if sexMatches[sm] == ageMatches[am]:
                             fullMatch.append(sexMatches[sm])
-                if fullMatch != []:
-                    print(fullMatch)
-                else:
-                    print("meow")
+
+                print(sexMatches)
+                print(ageMatches)
+                print(fullMatch)
 
 def chat():
     pass

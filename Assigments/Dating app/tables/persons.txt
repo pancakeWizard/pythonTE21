@@ -19,3 +19,5 @@ Ned
 Kyan
 Dora
 Alex
+Lara
+Alexander
